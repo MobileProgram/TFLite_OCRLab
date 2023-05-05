@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tfImageView: ImageView
     private lateinit var androidImageView: ImageView
     private lateinit var chromeImageView: ImageView
+    private lateinit var mlImageView: ImageView
+    private lateinit var warningImageView: ImageView
     private lateinit var chipsGroup: ChipGroup
     private lateinit var runButton: Button
     private lateinit var textPromptTextView: TextView
@@ -80,8 +82,10 @@ class MainActivity : AppCompatActivity() {
         tfImageView = findViewById(R.id.tf_imageview)
         androidImageView = findViewById(R.id.android_imageview)
         chromeImageView = findViewById(R.id.chrome_imageview)
+        mlImageView = findViewById(R.id.ml_imageview)
+        warningImageView = findViewById(R.id.warning_imageview)
 
-        val candidateImageViews = arrayOf<ImageView>(tfImageView, androidImageView, chromeImageView)
+        val candidateImageViews = arrayOf<ImageView>(tfImageView, androidImageView, chromeImageView,mlImageView,warningImageView )
 
         val assetManager = assets
         try {
@@ -94,6 +98,12 @@ class MainActivity : AppCompatActivity() {
             val chromeInputStream: InputStream = assetManager.open(chromeImageName)
             val chromeBitmap = BitmapFactory.decodeStream(chromeInputStream)
             chromeImageView.setImageBitmap(chromeBitmap)
+            val mlInputStream: InputStream = assetManager.open(machineLearningImageName)
+            val mlBitmap = BitmapFactory.decodeStream(mlInputStream)
+            mlImageView.setImageBitmap(mlBitmap)
+            val warningInputStream: InputStream = assetManager.open(warningImageName)
+            val warningBitmap = BitmapFactory.decodeStream(warningInputStream)
+            warningImageView.setImageBitmap(warningBitmap)
         } catch (e: IOException) {
             Log.e(TAG, "Failed to open a test image")
         }
@@ -161,11 +171,11 @@ class MainActivity : AppCompatActivity() {
                     } else if (v.equals(chromeImageView)) {
                         selectedImageName = chromeImageName
                         textPromptTextView.setText(getResources().getString(R.string.tfe_using_third_image))
-                    } else if (v.equals(machineLearningImageName)) {
-                        selectedImageName = chromeImageName
+                    } else if (v.equals(mlImageView)) {
+                        selectedImageName = machineLearningImageName
                         textPromptTextView.setText(getResources().getString(R.string.tfe_using_fourth_image))
-                    } else if (v.equals(warningImageName)) {
-                        selectedImageName = chromeImageName
+                    } else if (v.equals(warningImageView)) {
+                        selectedImageName = warningImageName
                         textPromptTextView.setText(getResources().getString(R.string.tfe_using_fifth_image))
                     }
                     return false
